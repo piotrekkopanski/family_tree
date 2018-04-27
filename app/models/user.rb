@@ -4,9 +4,10 @@ class User < ApplicationRecord
   validates :phone_number , :presence => true,
                             :numericality => true,
                             :length => { :minimum => 10, :maximum => 15 }
+  validate :check_parents
 
 
-  has_many :parents, class_name: "User", foreign_key: "children_id" #, before_add: :validate_parents
+  has_many :parents, class_name: "User", foreign_key: "children_id" 
   belongs_to :children, class_name: "User", optional: true
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -31,6 +32,14 @@ class User < ApplicationRecord
   def age
   	now = Time.now.utc.to_date
   	now.year - birthdate.year - ((now.month > birthdate.month || (now.month >= birthdate.month && now.day >= birthdate.day)) ? 0 : 1)
+  end
+
+  def check_parents
+  	if parents.size > 2
+  	  errors.add(:parents, "can't be more than two parents")
+  	elsif parents.size == 2 && parents.pluck(:sex).uniq.size != 2
+  	  errors.add(:parents, "can't be the same sex")
+  	end
   end
 
 end
