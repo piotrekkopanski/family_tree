@@ -1,14 +1,7 @@
 %h2
   Edit #{resource_name.to_s.humanize}
-= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
+= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
   = devise_error_messages!
-  .field
-    = f.label :email
-    %br/
-    = f.email_field :email, autofocus: true, autocomplete: "email"
-  - if devise_mapping.confirmable? && resource.pending_reconfirmation?
-    %div
-      Currently waiting confirmation for: #{resource.unconfirmed_email}
   .field
     = f.label :first_name
     %br/
@@ -24,18 +17,25 @@
   .field
     = f.label :birthdate
     %br/
-    = f.date_field :birthdate, autofocus: true
+    = f.date_field :birthdate, autocomplete: "birthdate"
   .field
     = f.label :address
     %br/
-    = f.text_field :address, autofocus: true
+    = f.text_field :address, autocomplete: "address"
   .field
     = f.label :phone_number
     %br/
-    = f.text_field :phone_number, autofocus: true
+    = f.text_field :phone_number, autocomplete: "phone_number"
   .field
     %br/
     = f.select :parent_ids, User.all.collect {|x| [x.full_name, x.id]}, {}, :multiple => true
+  .field
+    = f.label :email
+    %br/
+    = f.email_field :email, autofocus: true, autocomplete: "email"
+  - if devise_mapping.confirmable? && resource.pending_reconfirmation?
+    %div
+      Currently waiting confirmation for: #{resource.unconfirmed_email}
   .field
     = f.label :password
     %i (leave blank if you don't want to change it)
