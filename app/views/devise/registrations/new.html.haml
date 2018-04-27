@@ -1,0 +1,48 @@
+%h3 Sign up
+= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+  = devise_error_messages!
+  .field
+    = f.label :email
+    %br/
+    = f.email_field :email, autofocus: true, autocomplete: "email"
+  .field
+    = f.label :first_name
+    %br/
+    = f.text_field :first_name, autofocus: true
+  .field
+    = f.label :last_name
+    %br/
+    = f.text_field :last_name, autofocus: true
+  .field
+    = f.label :sex
+    %br/
+    = f.select :sex, User.sexes.keys, :include_blank => true
+  .field
+    = f.label :birthdate
+    %br/
+    = f.date_field :birthdate, autofocus: true
+  .field
+    = f.label :address
+    %br/
+    = f.text_field :address, autofocus: true
+  .field
+    = f.label :phone_number
+    %br/
+    = f.text_field :phone_number, autofocus: true
+  .field
+    %br/
+    = f.select :parent_ids, User.all.collect {|x| [x.full_name, x.id]}, {}, :multiple => true
+  .field
+    = f.label :password
+    - if @minimum_password_length
+      %em
+        (#{@minimum_password_length} characters minimum)
+    %br/
+    = f.password_field :password, autocomplete: "off"
+  .field
+    = f.label :password_confirmation
+    %br/
+    = f.password_field :password_confirmation, autocomplete: "off"
+  .actions
+    = f.submit "Sign up"
+= render "devise/shared/links"
