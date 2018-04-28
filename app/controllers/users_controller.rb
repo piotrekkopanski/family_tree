@@ -4,9 +4,17 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
+    respond_to do |format|
+      format.html { render "index" }
+      format.json { render :json => @users.to_json( :include => [:parents, :kinsfolk] ) }
+    end
   end
 
   def show
+    respond_to do |format|
+      format.html { render "show" }
+      format.json { render :json => @user.to_json( :include => [:parents, :kinsfolk] ) }
+    end
   end
 
   def new
