@@ -33,6 +33,9 @@
     %br/
     = f.select :parent_ids, User.all.collect {|x| [x.full_name, x.id]}, {}, :multiple => true
   .field
+    %br/
+    = f.select :sibling,  User.all.collect {|x| [x.full_name, x.id]}
+  .field
     = f.label :password
     - if @minimum_password_length
       %em

@@ -1,5 +1,19 @@
+%table
+  %tbody
+    %tr
+      %td Imię i Nazwisko
+      %td wiek
+      %td data urodzenia
+      %td adres
+      %td telefon
+    %tr
+      %td= @user.full_name
+      %td= @user.age
+      %td= @user.birthdate
+      %td= @user.address
+      %td= number_to_phone(@user.phone_number)
 Rodzice:
 - @user.parents.each do |user|
-  = user.full_name
+  = link_to user.full_name, user_path(user)
 Rodzenstwo:
-Dzieci:
+= link_to @user.kinsfolk, user_path(@user.kinsfolk)

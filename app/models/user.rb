@@ -9,6 +9,9 @@ class User < ApplicationRecord
 
   has_many :parents, class_name: "User", foreign_key: "children_id" 
   belongs_to :children, class_name: "User", optional: true
+
+  has_one :sibling, class_name: "User", foreign_key: "kinsfolk_id" 
+  belongs_to :kinsfolk, class_name: "User", optional: true
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
