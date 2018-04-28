@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-
   before_action :set_user, only: [:show, :edit, :update, :destroy, :password]
 
   def index
@@ -22,8 +21,23 @@ class UsersController < ApplicationController
   end
 
   def edit
+    @user = User.find(params[:id])
   end
 
+  def update
+    @user = User.find(params[:id])
+    if @user.update(user_params)
+      redirect_to users_path
+    else
+      render 'edit'
+    end
+  end
+
+  def destroy
+    @user = User.find(params[:id])
+    @user.destroy
+    redirect_to users_path
+  end
 
   def add_parent
     id = params[:id].to_i
