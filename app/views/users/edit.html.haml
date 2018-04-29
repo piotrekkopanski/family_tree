@@ -31,11 +31,15 @@
     = f.text_field :phone_number, autocomplete: "phone_number"
   .field
     %br/
-    = f.select :parent_ids, User.all.collect {|x| [x.full_name, x.id]}, {}, :multiple => true
+  = f.collection_check_boxes(:parent_ids, User.all, :id, :to_s) do |b|
+    = b.label do 
+      = b.check_box + b.text
+
+
   .field
     %br/
     = f.select :kinsfolk_id,  User.all.collect {|x| [x.full_name, x.id]}
-
+  = f.text_field :children_id
   .actions
     = f.submit "Update"
 %h3 Cancel my account

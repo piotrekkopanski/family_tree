@@ -30,6 +30,7 @@ gem 'devise', '~> 4.4', '>= 4.4.3'
 gem 'haml-rails', '~> 1.0'
 gem 'html2haml', '~> 2.2'
 gem 'simple_form', '~> 4.0'
+gem 'cancancan', '~> 2.2'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password

@@ -8,15 +8,17 @@
       %td adres
       %td telefon
       %td add parent
-      %td edit
-      %td delete
+      - if can? :update, @users
+        %td edit
+      - if can? :delete, @users
+        %td delete
     - @users.each do |user|
       %tr
-        %td= link_to user.full_name, user_path(user)
+        %td= link_to user.full_name, user_path(user) if can? :read, user
         %td= user.age
         %td= user.birthdate
         %td= user.address
         %td= number_to_phone(user.phone_number)
         %td= link_to "Is my parent", add_parent_users_path(:id => user), method: :post
-        %td= link_to "edit", edit_user_path(user)
-        %td= link_to "delete", user_path(user), data: {:confirm => 'Are you sure?'}, method: :delete
+        %td= link_to "edit", edit_user_path(user) if can? :update, user
+        %td= link_to "delete", user_path(user), data: {:confirm => 'Are you sure?'}, method: :delete if can? :delete, user

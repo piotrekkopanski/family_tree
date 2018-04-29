@@ -6,9 +6,9 @@ class User < ApplicationRecord
                             :length => { :minimum => 10, :maximum => 15 }
   validate :check_parents
 
-
-  has_many :parents, class_name: "User", foreign_key: "children_id" 
-  belongs_to :children, class_name: "User", optional: true
+  has_many :user_parents, class_name: Parent
+  has_many :parents, through: :user_parents, 
+            source: :parent
 
   has_one :sibling, class_name: "User", foreign_key: "kinsfolk_id" 
   belongs_to :kinsfolk, class_name: "User", optional: true
@@ -35,6 +35,10 @@ class User < ApplicationRecord
   def age
   	now = Time.now.utc.to_date
   	now.year - birthdate.year - ((now.month > birthdate.month || (now.month >= birthdate.month && now.day >= birthdate.day)) ? 0 : 1)
+  end
+
+  def parents_names
+  	parents.pluck(:first_name)
   end
 
   def check_parents
